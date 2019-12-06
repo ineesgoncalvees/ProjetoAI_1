@@ -24,7 +24,7 @@ public class AIBehavior : MonoBehaviour
 
     private void Awake()
     {
-        agents = GameObject.Find("Agents");
+        agents = GameObject.Find("Agent");
     }
 
     // Start is called before the first frame update
@@ -50,5 +50,20 @@ public class AIBehavior : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void WatchConcert()
+    {
+
+    }
+
+    private void GoRest()
+    {
+
+    }
+
+    private void GoEat()
+    {
+
     }
 }
