@@ -12,6 +12,7 @@ public class WaypointBehavior : WaypointCycler
     private Vector3 waypoint;
 
     // Reference to the agent's rigid body
+    [SerializeField]
     private Rigidbody rb;
 
     // Minimum distance to waypoint to trigger a new waypoint
@@ -20,7 +21,7 @@ public class WaypointBehavior : WaypointCycler
 
     // Speed of obstacle movement between waypoints
     [SerializeField]
-    [Range(0f, 1f)]
+    [Range(0f, 10f)]
     private float speed = 1f;
 
     // Start is called before the first frame update
@@ -33,8 +34,6 @@ public class WaypointBehavior : WaypointCycler
     private void FixedUpdate()
     {
         Vector3 vel;
-
-        Debug.Log(transform.position);
 
         // Are we close enough to the current waypoint?
         if ((CurrentWaypoint - transform.position).magnitude < minWaypointDist)
