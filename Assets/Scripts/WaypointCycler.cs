@@ -30,4 +30,14 @@ public abstract class WaypointCycler : MonoBehaviour
             currentWaypoint = 0;
         }
     }
+
+    // Draw gizmos at waypoints
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        for (int i = 0; i < waypoints.Length; i++)
+        {
+            Gizmos.DrawWireSphere(waypoints[i], 0.5f);
+        }
+    }
 }

@@ -8,6 +8,10 @@ using LibGameAI.ProjetoAI_1;
 public class AIBehavior : MonoBehaviour
 {
 
+    // Array of waypoints
+    [SerializeField]
+    private GameObject[] agent = null;
+
     // Minimum distance to other agents
     [SerializeField]
     private float minDistanceToAgents = 1f;

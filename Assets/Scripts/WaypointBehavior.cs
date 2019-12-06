@@ -48,11 +48,4 @@ public class WaypointBehavior : WaypointCycler
         // Move towards the next waypoint at the calculated velocity
         rb.MovePosition(transform.position + vel);
     }
-
-    // Draw waypoint
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(waypoint, 0.2f);
-    }
 }
