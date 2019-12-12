@@ -221,6 +221,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 174486699}
+  - component: {fileID: 174486700}
   m_Layer: 0
   m_Name: Agents
   m_TagString: Untagged
@@ -243,6 +244,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &174486700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174486698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a59d9eb03414d64b877978c10059dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent:
+  - {fileID: 1595908532}
+  minDistanceToAgents: 1
+  maxSpeed: 3
 --- !u!1 &241491204
 GameObject:
   m_ObjectHideFlags: 0
@@ -1413,7 +1430,6 @@ GameObject:
   - component: {fileID: 1595908536}
   - component: {fileID: 1595908535}
   - component: {fileID: 1595908540}
-  - component: {fileID: 1595908534}
   - component: {fileID: 1595908538}
   - component: {fileID: 1595908539}
   m_Layer: 0
@@ -1437,20 +1453,6 @@ Transform:
   m_Father: {fileID: 174486699}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1595908534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1595908532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a59d9eb03414d64b877978c10059dd4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minDistanceToAgents: 1
-  maxSpeed: 3
 --- !u!136 &1595908535
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1526,6 +1528,16 @@ MonoBehaviour:
   waypoints:
   - {x: 70, y: 0, z: -25}
   - {x: -70, y: 0, z: -25}
+  - {x: 40, y: 0, z: 73}
+  - {x: 12, y: 0, z: 73}
+  - {x: -13, y: 0, z: 73}
+  - {x: -41, y: 0, z: 73}
+  - {x: -55, y: 0, z: 58}
+  - {x: -26, y: 0, z: 58}
+  - {x: -1, y: 0, z: 58}
+  - {x: 28, y: 0, z: 58}
+  - {x: 60, y: 0, z: -135}
+  - {x: -60, y: 0, z: -135}
   maxSpeed: 8
   rb: {fileID: 1595908540}
   minWaypointDist: 0.5
