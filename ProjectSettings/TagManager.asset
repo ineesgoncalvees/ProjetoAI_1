@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Agent
+  - FoodCourt
+  - GreenSpaces
+  - Stages
   layers:
   - Default
   - TransparentFX

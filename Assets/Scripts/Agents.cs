@@ -8,7 +8,6 @@ public class Agents : MonoBehaviour
 {
     [SerializeField]
     private InputField userInput;
-    int nAgents = Convert.ToInt32(userInput.text);
 
     //List<Agents> agents = new List<Agents>();
 
@@ -19,6 +18,7 @@ public class Agents : MonoBehaviour
 
     public void GetInput(string userInput)
     {
+        int nAgents = Convert.ToInt32(userInput);
         Debug.Log(nAgents);
     }
 
