@@ -37,7 +37,7 @@ public class AIBehavior : MonoBehaviour
     {
         for(int i = 0; i < agents.Length; i++)
         {
-            Instantiate(agents[i], new Vector3(0, 0, -150), Quaternion.identity);
+            Instantiate(agents[i], new Vector3(0, 0, -120), Quaternion.identity);
         }
         greenSpaces = GameObject.FindGameObjectWithTag("GreenSpaces");
         stages = GameObject.FindGameObjectWithTag("Stages");
@@ -76,6 +76,20 @@ public class AIBehavior : MonoBehaviour
                 () => Debug.Log("Agent is tired"),
                 goRest));
 
+        goEat.AddTransition(
+            new Transition(
+                () =>
+                    hunger == 10,
+                () => Debug.Log("Agent will return to concert"),
+                goToConcert));
+
+        goRest.AddTransition(
+            new Transition(
+                () =>
+                    energy == 10,
+                () => Debug.Log("Agent will return to concert"),
+                goToConcert));
+
         stateMachine = new StateMachine(goToConcert);
     }
 
@@ -98,11 +112,13 @@ public class AIBehavior : MonoBehaviour
     {
         Vector3 toRest = transform.position - greenSpaces.transform.position;
         transform.Translate(toRest.normalized * maxSpeed * Time.deltaTime);
+        energy = 10;
     }
 
     private void GoEat()
     {
         Vector3 toEat = transform.position - foodCourt.transform.position;
         transform.Translate(toEat.normalized * maxSpeed * Time.deltaTime);
+        hunger = 10;
     }
 }
