@@ -45,32 +45,28 @@ public class AIBehavior : MonoBehaviour
 
     private void Awake()
     {
-        for(int i = 0; i < agents.Length; i++)
+        for (int i = 0; i < agents.Length; i++)
         {
             Instantiate(agents[i], new Vector3(5, 0, -160), Quaternion.identity);
-        }       
+        }
 
         greenSpaces = GameObject.FindGameObjectsWithTag("GreenSpaces")[0];
         stages = GameObject.FindGameObjectsWithTag("Stages")[0];
         foodCourt = GameObject.FindGameObjectsWithTag("FoodCourt")[0];
         ai = GameObject.FindGameObjectWithTag("Agent");
 
-        center = GameObject.Find("Primary");
-        secondary = GameObject.Find("Secondary");
-        terciary = GameObject.Find("Terciary");
-
         Vector3 toStage = transform.position - stages.transform.position;
-        //transform.Translate(toStage.normalized * maxSpeed * Time.realtimeSinceStartup);
+        transform.Translate(toStage.normalized * maxSpeed * Time.deltaTime);
         transform.Translate(toStage);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-            States goToConcert = new States("Go to concert",
-            () => Debug.Log("Enter concert state"),
-             WatchConcert,
-            () => Debug.Log("Leave concert state"));
+        States goToConcert = new States("Go to concert",
+           () => Debug.Log("Enter concert state"),
+            WatchConcert,
+           () => Debug.Log("Leave concert state"));
 
         States goRest = new States("Go rest",
            () => Debug.Log("Enter rest state"),
@@ -128,13 +124,11 @@ public class AIBehavior : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
-            Debug.Log("Clicked");           
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
             {
 
                 Vector3 mousePos = hit.point;
-                Debug.Log("Entrei");
 
                 Instantiate(center, mousePos, new Quaternion());
                 Instantiate(secondary, mousePos, new Quaternion());
@@ -142,58 +136,72 @@ public class AIBehavior : MonoBehaviour
 
                 center.transform.position = mousePos;
                 secondary.transform.position = mousePos;
-                terciary.transform.position = mousePos;             
-            }            
+                terciary.transform.position = mousePos;
+            }
         }
 
         if (ai.transform.position == center.transform.position)
         {
             isKilled = true;
-        } else if (ai.transform.position == secondary.transform.position)
+            Damage();
+        }
+        else if (ai.transform.position == secondary.transform.position)
         {
             isStunned = true;
-        } else if (ai.transform.position == terciary.transform.position)
+            Damage();
+        }
+        else if (ai.transform.position == terciary.transform.position)
         {
             willPanic = true;
+            Damage();
         }
     }
 
     private void Damage()
     {
-        if(isKilled)
+        if (isKilled)
         {
             Destroy(ai.gameObject);
-
-        } else if (isStunned)
+        }
+        else if (isStunned)
         {
             maxSpeed /= 2;
-        } else if (willPanic) { 
+            ai.transform.position = new Vector3(0, 0, -170);
+        }
+        else if (willPanic)
+        {
+            maxSpeed *= 2;
+            ai.transform.position = new Vector3(0, 0, -170);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (ai && other.gameObject.GetComponent<AIBehavior>() != null)
+        {
+            maxSpeed *= 2;
+            willPanic = true;
         }
     }
 
     private void WatchConcert()
     {
-        Vector3 toStage = transform.position - stages.transform.position;
+        Vector3 toStage = ai.transform.position - stages.transform.position;
         hunger--;
         energy--;
     }
 
     private void GoRest()
     {
-        Vector3 toRest = transform.position - greenSpaces.transform.position;
-        transform.Translate(toRest.normalized * maxSpeed * Time.realtimeSinceStartup);
+        Vector3 toRest = ai.transform.position - greenSpaces.transform.position;
+        transform.Translate(toRest.normalized * maxSpeed * Time.deltaTime);
         energy = 100;
     }
 
     private void GoEat()
     {
-        Vector3 toEat = transform.position - foodCourt.transform.position;
-        transform.Translate(toEat.normalized * maxSpeed * Time.realtimeSinceStartup);
+        Vector3 toEat = ai.transform.position - foodCourt.transform.position;
+        transform.Translate(toEat.normalized * maxSpeed * Time.deltaTime);
         hunger = 100;
-    }
-
-    void ExplosionDamage()
-    {
-       
     }
 }
