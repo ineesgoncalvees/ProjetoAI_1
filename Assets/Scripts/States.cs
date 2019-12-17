@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace LibGameAI.ProjetoAI_1
 {
-    public class State
+    public class States
     {
         // Name of the FSM state
         public string Name { get; }
@@ -24,7 +24,7 @@ namespace LibGameAI.ProjetoAI_1
         private IList<Transition> transitions;
 
         // Create a new state
-        public State(string name,
+        public States(string name,
             Action entryActions, Action stateActions, Action exitActions)
         {
             Name = name;

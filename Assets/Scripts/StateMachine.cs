@@ -8,10 +8,10 @@ namespace LibGameAI.ProjetoAI_1
     public class StateMachine
     {
         // Current state
-        private State currentState;
+        private States currentState;
 
         // Create a new FSM
-        public StateMachine(State initialState)
+        public StateMachine(States initialState)
         {
             currentState = initialState;
         }
@@ -40,7 +40,7 @@ namespace LibGameAI.ProjetoAI_1
                 Action actions = null;
 
                 // Find the target state
-                State targetState = triggeredTransition.TargetState;
+                States targetState = triggeredTransition.TargetState;
 
                 // Add the exit action of the old state, the transition action
                 // and the entry for the new state

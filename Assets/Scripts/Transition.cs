@@ -11,7 +11,7 @@ namespace LibGameAI.ProjetoAI_1
         // Actions associated with this transition
         public Action Actions { get; }
         // Target state for this transition
-        public State TargetState { get; }
+        public States TargetState { get; }
 
         // The condition for triggering this transition
         private Func<bool> condition;
@@ -24,7 +24,7 @@ namespace LibGameAI.ProjetoAI_1
 
         // Create a new transition
         public Transition(
-            Func<bool> condition, Action actions, State targetState)
+            Func<bool> condition, Action actions, States targetState)
         {
             this.condition = condition;
             Actions = actions;
