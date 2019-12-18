@@ -5,18 +5,27 @@ using UnityEngine;
 
 namespace LibGameAI.ProjetoAI_1
 {
+    /// <summary>
+    /// Class that defines the states
+    /// </summary>
     public class StateMachine
     {
         // Current state
         private States currentState;
 
-        // Create a new FSM
+        /// <summary>
+        /// Constructor of class StateMachine
+        /// </summary>
+        /// <param name="initialState"></param>
         public StateMachine(States initialState)
         {
             currentState = initialState;
         }
 
-        // Update the FSM and return the actions to perform
+        /// <summary>
+        /// Updates the FSM and return the actions to perform
+        /// </summary>
+        /// <returns></returns>
         public Action Update()
         {
             // Assume no transition is triggered
