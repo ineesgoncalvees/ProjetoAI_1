@@ -1,44 +1,50 @@
 # Primeiro projeto de Inteligência Artificial
 
-## Projeto realizado por:
+## Projeto realizado por
+
 - Diana Nóia, a21703004
 - Inês Gonçalves, a21702076
 - Inês Nunes, a21702520
 
-## Divisão de tarefas:
+## Divisão de tarefas
 
 ### Diana Nóia
 
 - Relatório: Introdução (pesquisa), Metodologia, Resultados e discussão, Conclusão;
 - Relatório: Figuras para ilustrar a Finite State Machine desenvolvida;
-- Relatório: UML do projeto
 - Iniciar código para input do utilizador do número de agentes;
 
 ### Inês Gonçalves
 
 (Não colaborou mais devido à sobreposição de projetos, principalmente o
-projeto 1 de LP2, o qual priorizou)
+projeto 1 de LP2 e VR, os quais priorizou)
 
 - Relatório: Introdução - Descrição do problema;
 - Comentários XML;
+- Relatório: UML do projeto;
 - Ajudou com as transições entre estados;
 - Ajudou a corrigir bugs no estados;
 
 ### Inês Nunes
 
-- Layout do mapa do festival;
+- Criou mapa;
 - Corrigir código para input do utilizador do número de agentes;
 - Doxygen;
+- Implementar a classe: Agents;
+- Implementar a classe: AIBehaviour;
+- Implementar a classe: Transition;
+- Implementar a classe: StateMachine;
+- Implementar a classe: States;
 
 ## Introdução
 
 ### Descrição do problema
 
-Neste projeto foi-nos pedido que simulássemos um festival de música, onde 
-existissem pelo menos dois palcos, uma zona de restauração, duas zonas de 
+Neste projeto foi-nos pedido que simulássemos um festival de música, onde
+existissem pelo menos dois palcos, uma zona de restauração, duas zonas de
 espaços verdes, saídas do recinto, e caminhos bem definidos entre as diferentes
 zonas.
-Este festival deve suportar no mínimo 100 agentes, sendo que cada um terá um 
+Este festival deve suportar no mínimo 100 agentes, sendo que cada um terá um
 comportamento autónomo.
 
 Os agentes têm três comportamentos diferentes:
@@ -101,8 +107,9 @@ evacuar espaços durante estas crises com o menor número possível de problemas
 A área de pesquisa que usa a simulação com agentes chama-se _Agent-Based_
 _Social_ _Simulation_ (ABSS) [2], e intersecta três campos cientificos:
 
-- Computção Baseada em Agentes : maioritariamente dentro da ciência da computação, e
-  inclui, por exemplo, _agent-based_ _modelling_, _design_, e _programming_;
+- Computação Baseada em Agentes : maioritariamente dentro da ciência da 
+  computação, e inclui, por exemplo, _agent-based_ _modelling_, _design_, e
+  _programming_;
 - Ciências Sociais: um grande conjunto de diferentes campos científicos, que
   estudam a interação entre entidades sociais, por exemplo, psicologia social,
   gestão, várias áreas da biologia,etc.;
@@ -162,7 +169,7 @@ polígonos na malha é ser feita com o algoritmo de pesquisa A *, que é usado
 pela sua eficiência de optimização, mas tem a desvantagem do uso de espaço, pois
 guarda todos os nodes gerados na memória. Existem algoritmos que pré-processam o
 gráfico para obter melhor performance, mas A* continua a ser a melhor solução em
-muitos casos, como nesta solução.Os valores que estão parametrizáveis no nosso
+muitos casos, como nesta solução. Os valores que estão parametrizáveis no nosso
 projeto são:
 
 - A fome do agente;
@@ -178,42 +185,59 @@ Os agentes terão diferentes estados, nomeadamente
 - Entrar em pânico se estiver no raio 2 ou 3 duma explosão (Panic);
 - Morrer se estiver no raio 1 duma explosão (Dead);
 
-Utilizámos uma Finite State Machine para a mudança de estados dos agentes;
+Utilizámos uma Finite State Machine para a mudança de estados dos agentes:
 
-<p align="center">
-  <img src="https://imgur.com/gczH92k" alt="FSM"/>
-</p>
+![FSM](FSM.png)
 
 Definimos as seguintes classes:
 
--
--
--
+- Agents: pede input para parametrizar o número de agentes;
+- AIBehaviour: define os estados, as transições e o movimento do AI;
+- Transition: classe necessária para as transições;
+- StateMachine: classe necessária para a StateMachine;
+- States: classe necessária para os estados;
 
+O UML deste projeto:
+
+![UML](Fluxograma.png)
 
 ## Resultados e discussão
 
-Após implementar a nossa solução para o nosso problema,
+Conseguimos implementar na nossa solução do projeto o movimento dos agentes,
+os estados dos mesmos, as transições entre os estados, as explosões e o
+pânico. Não nos deparámos com nenhum comportamento emergente que não tivesse
+sido explicitamente programado nos agentes.
 
-Os aspectos mais interessantes foram... (encontramos algum comportamento 
-emergente?(comportamento não explicitamente programado nos agentes))
+Os resultados obtidos foram os que estávamos à espera quando estávamos a
+realizar o projeto, ou seja, não houve grandes desvios dos resultados esperados.
 
-Interpretar os resultados observados, realçar correlações entre estes e
-parametrizações definidas, resultados inesperados com hipótese explicativas
+Não implementámos o fogo nem as saídas parametrizáveis.
 
 ## Conclusões
 
-relacionar introdução (problema apresentado) com resultados
-explicar como a nossa abordagem  se relaciona no panorama geral da pesquisa efetuada sobre simulação de pânico em multidões
+A pesquisa sobre a simulação do pânico em multidões foi útil quando foi feita a
+discussão acerca da organização do projeto. Após ser feita alguma pesquisa sobre
+a Navigation Mesh e o algoritmo A* conseguimos entender melhor como poderíamos
+aplicar a navegação dos agentes no mapa.
+
+A matéria leccionada nas aulas de Inteligência Artificial foi extremamente
+útil para a implementação da Finite State Machine e das transições entre os
+estados dos agentes. Ficámos a compreender melhor estas temáticas, e foi
+bastante interessante ver o que aprendemos em prática.
 
 ## Agradecimentos
 
-Agradecemos ao nosso colega Pedro Inácio, que nos deu a sugestão de usar um array de agentes;
+Agradecemos ao nosso colega Pedro Inácio, que nos deu a sugestão de usar um
+array de agentes;
 
-Agradecemos ao nosso colega Flávio Santos, que nos deu a sugestão de usar uma lista para os agentes;
+Agradecemos ao nosso colega Flávio Santos, que nos deu a sugestão de usar uma
+lista para os agentes;
 
-Agradecemos ao professor Nuno Fachada, por proporcionar o código no qual nos baseamos para fazer
-os statess e as transitions
+Agradecemos ao nosso colega Pedro Siqueira, que nos ajudou a resolver bugs nas
+explosões;
+
+Agradecemos ao professor Nuno Fachada, por proporcionar o código no qual nos
+baseamos para fazer os states e as transitions;
 
 ## Referências
 
