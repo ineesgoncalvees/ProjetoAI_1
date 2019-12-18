@@ -77,7 +77,7 @@ public class AIBehavior : MonoBehaviour
         goToConcert.AddTransition(
              new Transition(
                  () =>
-                     energy < 10,
+                     energy < 40,
                  () => Debug.Log("Agent is tired"),
                  goRest));
 

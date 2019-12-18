@@ -8,6 +8,9 @@ TagManager:
   - FoodCourt
   - GreenSpaces
   - Stages
+  - Center
+  - Secondary
+  - Terciary
   layers:
   - Default
   - TransparentFX
