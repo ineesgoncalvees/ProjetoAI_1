@@ -3,22 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using URandom = UnityEngine.Random;
 using LibGameAI.ProjetoAI_1;
 
 public class AIBehavior : MonoBehaviour
 {
-    // Array of agents
-    [SerializeField]
-    public GameObject[] agents;
-
     // Minimum distance to other agents
     [SerializeField]
     private float minDistanceToAgents = 1f;
 
     // Maximum speed
     [SerializeField]
-    private float maxSpeed = 0.5f;
+    private float maxSpeed = 3f;
 
     //Reference to AI's stats
     [SerializeField]
@@ -31,8 +26,6 @@ public class AIBehavior : MonoBehaviour
     private GameObject stages;
     private GameObject foodCourt;
 
-    private GameObject ai;
-
     private bool isKilled;
     private bool isStunned;
     private bool willPanic;
@@ -40,24 +33,20 @@ public class AIBehavior : MonoBehaviour
     public GameObject secondary;
     public GameObject terciary;
 
+    private float lossSpeed = 10f;
+
     // Reference to the state machine
     private StateMachine stateMachine;
 
     private void Awake()
     {
-        for (int i = 0; i < agents.Length; i++)
-        {
-            Instantiate(agents[i], new Vector3(5, 0, -160), Quaternion.identity);
-        }
-
         greenSpaces = GameObject.FindGameObjectsWithTag("GreenSpaces")[0];
         stages = GameObject.FindGameObjectsWithTag("Stages")[0];
         foodCourt = GameObject.FindGameObjectsWithTag("FoodCourt")[0];
-        ai = GameObject.FindGameObjectWithTag("Agent");
 
-        Vector3 toStage = transform.position - stages.transform.position;
-        transform.Translate(toStage.normalized * maxSpeed * Time.deltaTime);
-        transform.Translate(toStage);
+        center = GameObject.FindGameObjectWithTag("Center");
+        secondary = GameObject.FindGameObjectWithTag("Secondary");
+        terciary = GameObject.FindGameObjectWithTag("Terciary");
     }
 
     // Start is called before the first frame update
@@ -81,14 +70,14 @@ public class AIBehavior : MonoBehaviour
         goToConcert.AddTransition(
             new Transition(
                 () =>
-                    hunger < 3,
+                    hunger < 30,
                 () => Debug.Log("Agent is hungry"),
                 goEat));
 
         goToConcert.AddTransition(
              new Transition(
                  () =>
-                     energy < 3,
+                     energy < 10,
                  () => Debug.Log("Agent is tired"),
                  goRest));
 
@@ -140,17 +129,17 @@ public class AIBehavior : MonoBehaviour
             }
         }
 
-        if (ai.transform.position == center.transform.position)
+        if (transform.position == center?.transform.position)
         {
             isKilled = true;
             Damage();
         }
-        else if (ai.transform.position == secondary.transform.position)
+        else if (transform.position == secondary?.transform.position)
         {
             isStunned = true;
             Damage();
         }
-        else if (ai.transform.position == terciary.transform.position)
+        else if (transform.position == terciary?.transform.position)
         {
             willPanic = true;
             Damage();
@@ -161,47 +150,39 @@ public class AIBehavior : MonoBehaviour
     {
         if (isKilled)
         {
-            Destroy(ai.gameObject);
+            Destroy(gameObject);
         }
         else if (isStunned)
         {
             maxSpeed /= 2;
-            ai.transform.position = new Vector3(0, 0, -170);
+            transform.position = new Vector3(0, 0, -170);
         }
         else if (willPanic)
         {
             maxSpeed *= 2;
-            ai.transform.position = new Vector3(0, 0, -170);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (ai && other.gameObject.GetComponent<AIBehavior>() != null)
-        {
-            maxSpeed *= 2;
-            willPanic = true;
+            transform.position = new Vector3(0, 0, -170);
         }
     }
 
     private void WatchConcert()
     {
-        Vector3 toStage = ai.transform.position - stages.transform.position;
-        hunger--;
-        energy--;
+        Vector3 toStage = stages.transform.position - transform.position;
+        transform.Translate(toStage.normalized * maxSpeed * Time.deltaTime);
+        hunger -= Time.deltaTime * lossSpeed;
+        energy -= Time.deltaTime * lossSpeed;
     }
 
     private void GoRest()
     {
-        Vector3 toRest = ai.transform.position - greenSpaces.transform.position;
+        Vector3 toRest = greenSpaces.transform.position - transform.position;
         transform.Translate(toRest.normalized * maxSpeed * Time.deltaTime);
-        energy = 100;
+        energy += Time.deltaTime * lossSpeed;
     }
 
     private void GoEat()
     {
-        Vector3 toEat = ai.transform.position - foodCourt.transform.position;
+        Vector3 toEat = foodCourt.transform.position - transform.position;
         transform.Translate(toEat.normalized * maxSpeed * Time.deltaTime);
-        hunger = 100;
+        hunger += Time.deltaTime * lossSpeed;
     }
 }
